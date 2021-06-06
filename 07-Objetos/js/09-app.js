@@ -14,7 +14,7 @@ const product8 = {
 Object.seal(product8)
 
 //Doesnt allow you to add or delete properties inside of an object
-//you Change values only
+//you can Change values only
 product8.available = true;
 
 // delete product8.price;
