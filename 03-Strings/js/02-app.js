@@ -1,3 +1,5 @@
+console.log("*************length, indexOf, includes**************");
+
 const brand = "Apple is very expensive";
 console.log(brand);
 
@@ -10,4 +12,3 @@ console.log(brand.indexOf("Apple"));
 //Find if word exist or not by boleans
 console.log(brand.includes("very"));
 
-console.log("*****************************************");

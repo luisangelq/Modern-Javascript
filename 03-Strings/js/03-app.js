@@ -1,3 +1,5 @@
+console.log("*************Concat strings**************");
+
 const sentence = "I'm Combining this -> ";
 const sentenceNext = "Whit this";
 
