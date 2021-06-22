@@ -8,7 +8,7 @@ function product(price) {
     return result += price;
 }
 
-function subTotal(products) {
+function subTotal() {
     return  result * 1.16;
 }
 
