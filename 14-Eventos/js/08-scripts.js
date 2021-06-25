@@ -1,3 +1,4 @@
+console.log("******How to trigger a function while generate html with JS *****");
 // Evitar la propagación con contenido creado...
 const parrafo1 = document.createElement('P');
 parrafo1.textContent = 'Concierto';
@@ -13,6 +14,9 @@ parrafo2.classList.add('titulo');
 const parrafo3 = document.createElement('p');
 parrafo3.textContent = '$800 por persona';
 parrafo3.classList.add('precio');
+parrafo3.onclick = () => {
+    newFunction(2)
+}
 
 // crear el div...
 const info = document.createElement('div');
@@ -38,3 +42,8 @@ contenedorCard.appendChild(info);
 // Insertarlo en el HTML...
 const contenedor = document.querySelector('.hacer .contenedor-cards');
 contenedor.appendChild(contenedorCard); // al inicio info
+
+
+const newFunction = () => {
+    console.log("How to trigger a function while generate html with JS ");
+}

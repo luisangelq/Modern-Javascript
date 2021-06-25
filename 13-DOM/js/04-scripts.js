@@ -9,3 +9,7 @@ console.log(header2.innerHTML); // get the html
 
 header2.textContent = "Im changing the text"
 console.log(header2.textContent);
+
+const image = document.querySelector(".card img")
+image.src = "img/hacer2.jpg"
+console.log(image);
