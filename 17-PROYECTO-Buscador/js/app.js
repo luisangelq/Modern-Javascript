@@ -1,13 +1,44 @@
 document.addEventListener("DOMContentLoaded", () => {
-  showCars();
+  showCars(cars);
   //fill select year
   fillSelect();
 
   brand.addEventListener("change", (e) => {
     searchData.brand = e.target.value
+    carFilter()
+    
+  })
+  year.addEventListener("change", (e) => {
+    searchData.year = e.target.value
+    carFilter()
+  })
+  minPrice.addEventListener("change", (e) => {
+    searchData.minPrice = e.target.value
+    console.log(e.target.value);
+    
+  })
+  maxPrice.addEventListener("change", (e) => {
+    searchData.maxPrice = e.target.value
+    console.log(e.target.value);
+    
+  })
+  doors.addEventListener("change", (e) => {
+    searchData.doors = e.target.value
+    console.log(e.target.value);
+    
+  })
+  transmission.addEventListener("change", (e) => {
+    searchData.transmission = e.target.value
+    console.log(e.target.value);
+    
+  })
+  color.addEventListener("change", (e) => {
+    searchData.color = e.target.value
     console.log(e.target.value);
     console.log(searchData);
   })
+
+  
   
 });
 
@@ -18,7 +49,7 @@ const year = document.querySelector("#year");
 const minPrice = document.querySelector("#minimo")
 const maxPrice = document.querySelector("#maximo")
 const doors = document.querySelector("#puertas")
-const transmission = document.querySelector("#minimo")
+const transmission = document.querySelector("#transmision")
 const color = document.querySelector("#color")
 
 
@@ -39,6 +70,16 @@ const searchData = {
 }
 
 //Functions
+function fillSelect() {
+  for (let i = max; i >= min; i--) {
+    const option = document.createElement("option");
+    option.value = i;
+    option.textContent = i;
+
+    year.appendChild(option);
+  }
+};
+
 function getMin() {
   const yearList = cars.map((e) => e.year);
   const min = Math.min(...yearList);
@@ -47,7 +88,29 @@ function getMin() {
   return result;
 };
 
-function showCars() {
+
+function carFilter() {
+  const result = cars.filter( brandFilter ).filter( yearFilter ) //Higer order function (funciones de alto nivel)
+
+  showCars(result);
+}
+
+function brandFilter(car) {
+  if (searchData.brand) {
+    return car.brand === searchData.brand
+  }
+  return car
+}
+function yearFilter(car) {
+  if (searchData.year) {
+    return car.year === parseInt(searchData.year) 
+  }
+  return car
+}
+
+
+
+function showCars(cars) {
   cars.forEach((car) => {
     const { brand, model, year, doors, color, price, transmision } = car;
     const carHTML = document.createElement("p");
@@ -59,14 +122,5 @@ function showCars() {
   });
 };
 
-function fillSelect() {
-  for (let i = max; i >= min; i--) {
-    const option = document.createElement("option");
-    option.value = i;
-    option.textContent = i;
-
-    year.appendChild(option);
-  }
-};
 
 
