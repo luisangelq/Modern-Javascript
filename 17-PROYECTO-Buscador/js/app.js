@@ -1,20 +1,42 @@
 document.addEventListener("DOMContentLoaded", () => {
   showCars();
-  
   //fill select year
   fillSelect();
+
+  brand.addEventListener("change", (e) => {
+    searchData.brand = e.target.value
+    console.log(e.target.value);
+    console.log(searchData);
+  })
+  
 });
 
 //Variables
-const result = document.querySelector("#resultado");
+
+const brand = document.querySelector("#marca");
 const year = document.querySelector("#year");
+const minPrice = document.querySelector("#minimo")
+const maxPrice = document.querySelector("#maximo")
+const doors = document.querySelector("#puertas")
+const transmission = document.querySelector("#minimo")
+const color = document.querySelector("#color")
+
 
 const max = new Date().getFullYear();
 const min = max - getMin();
 
-console.log(min);
+const result = document.querySelector("#resultado");
 
-
+//Generate object with search
+const searchData = {
+  brand: "",
+  year: "",
+  minPrice: "",
+  maxPrice: "",
+  doors: "",
+  transmission: "",
+  color: ""
+}
 
 //Functions
 function getMin() {
@@ -46,3 +68,5 @@ function fillSelect() {
     year.appendChild(option);
   }
 };
+
+
