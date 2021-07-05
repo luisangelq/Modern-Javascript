@@ -61,6 +61,14 @@ const searchData = {
 };
 
 //Functions
+function getMin() {
+  const yearList = cars.map((e) => e.year);
+  const min = Math.min(...yearList);
+  const result = max - min;
+
+  return result;
+}
+ 
 function fillSelect() {
   for (let i = max; i >= min; i--) {
     const option = document.createElement("option");
@@ -71,13 +79,6 @@ function fillSelect() {
   }
 }
 
-function getMin() {
-  const yearList = cars.map((e) => e.year);
-  const min = Math.min(...yearList);
-  const result = max - min;
-
-  return result;
-}
 
 function carFilter() {
   const result = cars
@@ -89,7 +90,21 @@ function carFilter() {
     .filter(transmissionFilter)
     .filter(colorFilter); //Higer order function (funciones de alto nivel)
 
-  showCars(result);
+    if (result.length) {
+      showCars(result);
+    } else {
+      noResult();
+    }
+}
+function noResult() {
+
+  cleanHTML();
+  
+  const noResult = document.createElement("div")
+  noResult.classList.add("alerta", "error")
+  noResult.textContent = "There aren't any results "
+
+  result.appendChild(noResult)
 }
 
 function brandFilter(car) {
