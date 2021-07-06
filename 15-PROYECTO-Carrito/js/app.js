@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     basket = []; 
     basketHTML();
   })
+  basket = JSON.parse(localStorage.getItem("basket")) || [];
+  basketHTML();
 });
 
 //Variables
@@ -15,7 +17,7 @@ const coursesList = document.querySelector("#lista-cursos");
 
 let basket = [];
 
-//functions
+//hit button and take the data
 const addCourse = (e) => {
   e.preventDefault();
   if (e.target.classList.contains("agregar-carrito")) {
@@ -25,6 +27,7 @@ const addCourse = (e) => {
   }
 };
 
+//create the obj and validation
 const readCourseInfo = (info) => {
   const infoCourse = {
     id: info.querySelector("a").getAttribute("data-id"),
@@ -79,9 +82,16 @@ const basketHTML = () => {
     //Add HTML from basket to tbody
     basketContainer.appendChild(row);
   });
+  //Sync with Local Storage
+  storageSync();
 };
 
+//Save items in storage
+const storageSync = () => {
+  localStorage.setItem("basket", JSON.stringify(basket))
+}
 
+//Delete Course
 const deleteCourse = (e) => {
   if (e.target.classList.contains("borrar-curso")) {
      const getId = e.target.getAttribute("data-id")

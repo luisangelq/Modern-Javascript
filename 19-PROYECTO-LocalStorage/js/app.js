@@ -1,11 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", addTweet);
+
+  tweets = JSON.parse(localStorage.getItem("tweets")) || [];
+  createHTML();
 });
 
+//Variables
 const form = document.querySelector("#form");
 const tweetsList = document.querySelector("#tweets-list");
 let tweets = [];
 
+//Add Tweet
 const addTweet = (e) => {
   e.preventDefault();
 
@@ -19,12 +24,58 @@ const addTweet = (e) => {
 
   const tweetObj = {
     id: Date.now(),
-    tweet
+    tweet,
   };
-  tweets = [...tweets, tweetObj];
-  console.log(tweets);
+  tweets = [tweetObj, ...tweets];
+
+  createHTML();
+
+  form.reset();
 };
 
+//Show tweet list
+function createHTML() {
+  cleanHTML();
+
+  if (tweets.length > 0) {
+    tweets.forEach((tweet) => {
+      //Add button to delete
+      const btnDelete = document.createElement("a");
+      btnDelete.classList.add("borrar-tweet");
+      btnDelete.textContent = "X";
+      btnDelete.onclick = () => {
+        deleteTweet(tweet.id);
+      }
+
+      const li = document.createElement("li");
+      li.textContent = tweet.tweet;
+
+      li.appendChild(btnDelete)
+
+      tweetsList.appendChild(li);
+    });
+  }
+
+  storageSync();
+}
+//Add tweets to local Storage
+const storageSync = () => {
+  localStorage.setItem("tweets", JSON.stringify(tweets));
+};
+
+//clean HTML
+const cleanHTML = () => {
+  while (tweetsList.firstChild) {
+    tweetsList.removeChild(tweetsList.firstChild);
+  }
+};
+
+//Delete Tweet
+const deleteTweet = (id) => {
+  tweets = tweets.filter(tweet => tweet.id != id)
+  createHTML()
+}
+//show Error
 const showError = (error) => {
   const checkError = document.querySelector(".error");
   if (checkError) {
