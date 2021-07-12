@@ -12,6 +12,16 @@ class Company {
 }
 
 //Inherit 
-class Company extends Client3 {
-
+class Client3 extends Company {
+    constructor(name, phone, email, balance){
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.balance = balance;
+    }
 }
+
+const umbralApps = new Company("Umbral Apps", 85000)
+const jose = new Client3("Jose", 1500)
+
+console.log(jose.clientType("Platinum"));
