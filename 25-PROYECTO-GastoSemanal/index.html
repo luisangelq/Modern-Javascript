@@ -1,40 +1,44 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,400" rel="stylesheet">
     <link rel="stylesheet" href="css/custom.css">
-    <title>Gasto Semanal</title>
+    <title>Weekly Expense</title>
 
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="container">
         <header>
-                <h1 class="text-center">Gasto Semanal</h1>
+            <h1 class="text-center">Gasto Semanal</h1>
         </header>
         <section class="contenido-principal">
             <div class="row">
                 <div class="col ">
                     <div class="contenido primario">
                         <h2 class="text-center">Añade tus gastos aqui</h2>
-                            <form id="agregar-gasto" action="#">
-                                <div class="form-group">
-                                    <label for="gasto">Gasto:</label>
-                                    <input type="text" class="form-control" id="gasto" placeholder="Nombre Gasto">
-                                </div>
-                                <div class="form-group">
-                                    <label for="cantidad">Cantidad:</label>
-                                    <input type="text" class="form-control" id="cantidad" placeholder="Cantidad en $">
-                                </div>
+                        <form id="agregar-gasto" action="#">
+                            <div class="form-group">
+                                <label for="gasto">Gasto:</label>
+                                <input type="text" class="form-control" id="gasto" placeholder="Nombre Gasto">
+                            </div>
+                            <div class="form-group">
+                                <label for="cantidad">Cantidad:</label>
+                                <input type="text" class="form-control" id="cantidad" placeholder="Cantidad en $">
+                            </div>
 
-                                <button type="submit" class="btn btn-primary">Agregar</button>
-                            </form>
+                            <button type="submit" class="btn btn-primary">Agregar</button>
+                        </form>
 
-                    </div> <!--.contenido-->
-                </div> <!--.col-->
+                    </div>
+                    <!--.contenido-->
+                </div>
+                <!--.col-->
 
                 <div class="col">
                     <div class="contenido secundario">
@@ -51,14 +55,19 @@
                             <div class="restante alert alert-success">
                                 <p>Restante: $ <span id="restante"></span></p>
                             </div>
-                        </div> <!--.presupuesto-->
-                    </div> <!--.contenido-->
-                </div><!--.col-->
-            </div> <!--.row-->
+                        </div>
+                        <!--.presupuesto-->
+                    </div>
+                    <!--.contenido-->
+                </div>
+                <!--.col-->
+            </div>
+            <!--.row-->
         </section>
     </div>
 
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="js/app.js"></script>
-  </body>
+</body>
+
 </html>
