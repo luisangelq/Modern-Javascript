@@ -115,12 +115,19 @@ class UI {
         `;
 
       const deleteBtn = document.createElement("button");
-      deleteBtn.classList.add("btn", "btn-danger", "mr-2");
+      deleteBtn.classList.add("btn", "btn-danger" );
       deleteBtn.innerHTML = `DELETE <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
       <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
     </svg>`;
 
       deleteBtn.onclick = () => deleteAppointment(id);
+
+      const editBtn = document.createElement("button");
+      editBtn.classList.add("btn", "btn-info", "mr-2");
+      editBtn.innerHTML = `EDIT <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+    </svg>`;
+      editBtn.onclick = () => editAppointment(appointment);
 
       divAppointment.appendChild(petElement);
       divAppointment.appendChild(ownerElement);
@@ -128,7 +135,9 @@ class UI {
       divAppointment.appendChild(dateElement);
       divAppointment.appendChild(timeElement);
       divAppointment.appendChild(symptomElement);
+      divAppointment.appendChild(editBtn);
       divAppointment.appendChild(deleteBtn);
+      
 
       //Add to HTML
       dateList.appendChild(divAppointment);
@@ -188,3 +197,7 @@ const deleteAppointment = (id) => {
   //Refresh appointments
   ui.printAppointments(manageAppointments);
 };
+
+const editAppointment = (appointment) => {
+    const { id, pet, owner, phone, date, time, symptoms } = appointment;
+}
