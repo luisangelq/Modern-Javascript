@@ -8,6 +8,9 @@ const symptomsInput = document.querySelector("#sintomas");
 const form = document.querySelector("#nueva-cita");
 const dateList = document.querySelector("#citas");
 
+//Edit Mode
+let edit;
+
 const appointmentObj = {
   pet: "",
   owner: "",
@@ -169,6 +172,11 @@ const newAppointment = (e) => {
     return;
   }
 
+  if (edit) {
+    console.log("edit mode");
+  }else{
+    console.log("new mode");
+  }
   appointmentObj.id = Date.now();
 
   manageAppointments.addAppointment({ ...appointmentObj });
@@ -199,5 +207,28 @@ const deleteAppointment = (id) => {
 };
 
 const editAppointment = (appointment) => {
-    const { id, pet, owner, phone, date, time, symptoms } = appointment;
+    const {id, pet, owner, phone, date, time, symptoms } = appointment;
+    //fill form
+    petInput.value = pet;
+    ownerInput.value = owner;
+    phoneInput.value = phone;
+    dateInput.value = date;
+    timeInput.value = time;
+    symptomsInput.value = symptoms;
+
+    //fill appointmentObj
+    appointmentObj.pet = pet;
+    appointmentObj.owner = owner;
+    appointmentObj.phone = phone;
+    appointmentObj.date = date;
+    appointmentObj.time = time;
+    appointmentObj.symptoms = symptoms;
+    appointmentObj.id = id;
+
+  
+    form.querySelector("button").innerHTML = `UPDATE <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+  </svg>`;
+
+    edit = true;
 }
