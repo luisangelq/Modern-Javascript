@@ -42,10 +42,22 @@ class Appointment {
     console.log(this.appointments);
   }
 
+  editAppointment(appointmentUpdated) {
+    this.appointments = this.appointments.map((appointment) => {
+      if (appointment.id === appointmentUpdated.id) {
+        return appointmentUpdated;
+      }
+      return appointment;
+    });
+    console.log(this.appointments);
+    
+  }
+
   deleteAppointment(id) {
     this.appointments = this.appointments.filter(
       (appointment) => appointment.id !== id
     );
+    console.log(this.appointments);
   }
 }
 
@@ -118,7 +130,7 @@ class UI {
         `;
 
       const deleteBtn = document.createElement("button");
-      deleteBtn.classList.add("btn", "btn-danger" );
+      deleteBtn.classList.add("btn", "btn-danger");
       deleteBtn.innerHTML = `DELETE <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
       <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
     </svg>`;
@@ -140,7 +152,6 @@ class UI {
       divAppointment.appendChild(symptomElement);
       divAppointment.appendChild(editBtn);
       divAppointment.appendChild(deleteBtn);
-      
 
       //Add to HTML
       dateList.appendChild(divAppointment);
@@ -173,13 +184,18 @@ const newAppointment = (e) => {
   }
 
   if (edit) {
-    console.log("edit mode");
-  }else{
-    console.log("new mode");
-  }
-  appointmentObj.id = Date.now();
+    form.querySelector("button").textContent = "Create Appointment"
+    manageAppointments.editAppointment({ ...appointmentObj });
 
-  manageAppointments.addAppointment({ ...appointmentObj });
+    edit = false;
+    ui.printAlert("Updated Successfully");
+  } else {
+    appointmentObj.id = Date.now();
+
+    manageAppointments.addAppointment({ ...appointmentObj });
+
+    ui.printAlert("Added Successfully");
+  }
 
   resetObj();
   form.reset();
@@ -207,28 +223,29 @@ const deleteAppointment = (id) => {
 };
 
 const editAppointment = (appointment) => {
-    const {id, pet, owner, phone, date, time, symptoms } = appointment;
-    //fill form
-    petInput.value = pet;
-    ownerInput.value = owner;
-    phoneInput.value = phone;
-    dateInput.value = date;
-    timeInput.value = time;
-    symptomsInput.value = symptoms;
+  const { id, pet, owner, phone, date, time, symptoms } = appointment;
+  //fill form
+  petInput.value = pet;
+  ownerInput.value = owner;
+  phoneInput.value = phone;
+  dateInput.value = date;
+  timeInput.value = time;
+  symptomsInput.value = symptoms;
 
-    //fill appointmentObj
-    appointmentObj.pet = pet;
-    appointmentObj.owner = owner;
-    appointmentObj.phone = phone;
-    appointmentObj.date = date;
-    appointmentObj.time = time;
-    appointmentObj.symptoms = symptoms;
-    appointmentObj.id = id;
+  //fill appointmentObj
+  appointmentObj.pet = pet;
+  appointmentObj.owner = owner;
+  appointmentObj.phone = phone;
+  appointmentObj.date = date;
+  appointmentObj.time = time;
+  appointmentObj.symptoms = symptoms;
+  appointmentObj.id = id;
 
-  
-    form.querySelector("button").innerHTML = `UPDATE <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  form.querySelector(
+    "button"
+  ).innerHTML = `Update <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
   </svg>`;
 
-    edit = true;
-}
+  edit = true;
+};
