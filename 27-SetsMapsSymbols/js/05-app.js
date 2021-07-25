@@ -24,3 +24,4 @@ person1.clientType = "Premium";
 person1.age = 30;
 
 console.log(person1);
+console.log(person1[name]);
