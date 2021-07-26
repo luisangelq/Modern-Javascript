@@ -10,7 +10,7 @@ class Company {
     }
 
     clientType(membership) {
-        return `${this.#name} has a ${membership} membership and $${this.balance}`
+        return `${this.#name} has a ${membership} membership and $${this.balance} phone: ${this.phone}`
     }
 }
 
@@ -28,4 +28,4 @@ const umbralApps = new Company("Umbral Apps", 85000)
 const jose = new Client3("Jose", 1500, 3326264356, "jose@gmail.com")
 
 console.log(jose.clientType("Platinum"));
-console.log(jose);
+console.log(umbralApps);

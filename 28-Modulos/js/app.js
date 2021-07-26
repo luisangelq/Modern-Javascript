@@ -1,6 +1,31 @@
-import { clientName, clientAge, showInformation, balance } from './cliente.js';
+import {
+  clientName as client1,
+  clientAge,
+  showInformation,
+  balance,
+  Client,
+} from "./cliente.js";
 
-console.log(clientName ); 
-console.log(clientAge );
+import { Company } from "./empresa.js";
 
-console.log(showInformation(clientName, clientAge), balance(50));
+console.log(client1);
+console.log(clientAge);
+
+console.log(showInformation(client1, clientAge), balance(50));
+
+const client = new Client("Federico", 23);
+console.log(client);
+
+
+
+const company = new Company(
+  "Luis Angel",
+  20,
+  "Distributor",
+  "luisangel@gmail.com",
+  3326264356,
+  "Playa Blanca #1155",
+  "brades123"
+);
+
+console.log(company.showInfo());
