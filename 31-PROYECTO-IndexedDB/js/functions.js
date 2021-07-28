@@ -59,13 +59,24 @@ const newAppointment = (e) => {
 
     manageAppointments.addAppointment({ ...appointmentObj });
 
-    ui.printAlert("Added Successfully");
+    //Insert to DB
+    const transaction = DB.transaction(["appointments"], "readwrite");
+    const store = transaction.objectStore("appointments"); 
+    store.add(appointmentObj);
+
+    transaction.oncomplete = () => {
+      console.log("Appointment Created");
+
+      ui.printAlert("Added Successfully");
+    }
+
+    
   }
 
   resetObj();
   form.reset();
 
-  ui.printAppointments(manageAppointments);
+  ui.printAppointments();
 };
 
 const resetObj = () => {
@@ -84,7 +95,7 @@ const deleteAppointment = (id) => {
   ui.printAlert("Deleted Successfully");
 
   //Refresh appointments
-  ui.printAppointments(manageAppointments);
+  ui.printAppointments();
 };
 
 const editAppointment = (appointment) => {
@@ -124,9 +135,23 @@ const createDB = () => {
   appointmentsDB.onsuccess = () => {
     console.log("Database created");
     DB = appointmentsDB.result;
-    console.log(DB);
+    
+    ui.printAppointments();
+  }
+  //Schema
+  appointmentsDB.onupgradeneeded = (e) => {
+    const db = e.target.result;
+    const store = db.createObjectStore("appointments", { keyPath: "id", autoIncrement: true });
+
+    //Define columns
+    store.createIndex("pet", "pet", { unique: false });
+    store.createIndex("owner", "owner", { unique: false });
+    store.createIndex("phone", "phone", { unique: false });
+    store.createIndex("date", "date", { unique: false });
+    store.createIndex("time", "time", { unique: false });
+    store.createIndex("symptoms", "symptoms", { unique: false });
   }
 
 }
 
-export { appointmentData, newAppointment, deleteAppointment, editAppointment, createDB };
+export { appointmentData, newAppointment, deleteAppointment, editAppointment, createDB, DB };
