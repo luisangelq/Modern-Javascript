@@ -1,4 +1,3 @@
-import Appointment from "./classes/Appointment.js";
 import UI from "./classes/UI.js";
 
 import {
@@ -11,7 +10,6 @@ import {
   form,
 } from "./selectors.js";
 
-const manageAppointments = new Appointment();
 const ui = new UI();
 
 const appointmentObj = {
@@ -50,27 +48,32 @@ const newAppointment = (e) => {
 
   if (edit) {
     form.querySelector("button").textContent = "Create Appointment";
-    manageAppointments.editAppointment({ ...appointmentObj });
 
-    edit = false;
-    ui.printAlert("Updated Successfully");
+    //Edit data in DB
+    const transaction = DB.transaction(["appointments"], "readwrite");
+    const store = transaction.objectStore("appointments");
+    store.put(appointmentObj);
+
+    transaction.oncomplete = () => {
+      edit = false;
+      ui.printAlert("Updated Successfully");
+    };
+    transaction.onerror = () => {
+      ui.printAlert("Error Updating Data", "error");
+    };
   } else {
     appointmentObj.id = Date.now();
 
-    manageAppointments.addAppointment({ ...appointmentObj });
-
     //Insert to DB
     const transaction = DB.transaction(["appointments"], "readwrite");
-    const store = transaction.objectStore("appointments"); 
+    const store = transaction.objectStore("appointments");
     store.add(appointmentObj);
 
     transaction.oncomplete = () => {
       console.log("Appointment Created");
 
       ui.printAlert("Added Successfully");
-    }
-
-    
+    };
   }
 
   resetObj();
@@ -89,13 +92,20 @@ const resetObj = () => {
 };
 
 const deleteAppointment = (id) => {
-  manageAppointments.deleteAppointment(id);
+  const transaction = DB.transaction(["appointments"], "readwrite");
+  const store = transaction.objectStore("appointments");
+  store.delete(id);
 
-  //Show Delete alert
-  ui.printAlert("Deleted Successfully");
+  transaction.oncomplete = () => {
+    //Show Delete alert
+    ui.printAlert("Deleted Successfully");
 
-  //Refresh appointments
-  ui.printAppointments();
+    //Refresh appointments
+    ui.printAppointments();
+  };
+  transaction.onerror = () => {
+    ui.printAlert("Error Deleting Data", "error");
+  }
 };
 
 const editAppointment = (appointment) => {
@@ -131,17 +141,20 @@ const createDB = () => {
 
   appointmentsDB.onerror = () => {
     console.log("Database error");
-  }
+  };
   appointmentsDB.onsuccess = () => {
     console.log("Database created");
     DB = appointmentsDB.result;
-    
+
     ui.printAppointments();
-  }
+  };
   //Schema
   appointmentsDB.onupgradeneeded = (e) => {
     const db = e.target.result;
-    const store = db.createObjectStore("appointments", { keyPath: "id", autoIncrement: true });
+    const store = db.createObjectStore("appointments", {
+      keyPath: "id",
+      autoIncrement: true,
+    });
 
     //Define columns
     store.createIndex("pet", "pet", { unique: false });
@@ -150,8 +163,14 @@ const createDB = () => {
     store.createIndex("date", "date", { unique: false });
     store.createIndex("time", "time", { unique: false });
     store.createIndex("symptoms", "symptoms", { unique: false });
-  }
+  };
+};
 
-}
-
-export { appointmentData, newAppointment, deleteAppointment, editAppointment, createDB, DB };
+export {
+  appointmentData,
+  newAppointment,
+  deleteAppointment,
+  editAppointment,
+  createDB,
+  DB,
+};
