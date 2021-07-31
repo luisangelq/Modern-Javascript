@@ -1,4 +1,3 @@
-
 class UI {
   printAlert = (message, type) => {
     const deleteAlert = document.querySelector(".alertM");

@@ -1,19 +1,17 @@
-import {createDB, validateClient, connectDB} from "../functions.js"
-
+import { createDB, getClients } from "../functions.js";
 
 class App {
-    constructor() {
-        this.init();
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    createDB();
+
+    if (window.indexedDB.open("UmbralCRM", 1)) {
+      getClients();
     }
-
-    init() {
-        createDB();
-
-        connectDB();
-
-        //Add event listener to form
-        form.addEventListener("submit", validateClient);
-    }
+  }
 }
 
 export default App;
