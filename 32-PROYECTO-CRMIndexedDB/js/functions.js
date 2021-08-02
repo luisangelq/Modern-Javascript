@@ -10,7 +10,10 @@ const companyInput = document.querySelector("#company");
 const form = document.querySelector("#form");
 
 const clientList = document.querySelector("#clientList");
-clientList.addEventListener("click", (e) => deleteClient(e)); 
+if (clientList) {
+  clientList.addEventListener("click", (e) => deleteClient(e)); 
+}
+
 
  
 let DB;
@@ -198,11 +201,40 @@ const updateClient = (client) => {
 
 const deleteClient = (id) => {
   if (id.target.classList.contains("deleteClient")) {
-    const idDelete = Number(id.target.dataset.client);
-    const transaction = DB.transaction(["crm"], "readwrite");
-    const store = transaction.objectStore("crm");
-    store.delete(idDelete);
+    const idDelete = Number(id.target.dataset.client) 
 
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const transaction = DB.transaction(["crm"], "readwrite");
+        const store = transaction.objectStore("crm");
+        store.delete(idDelete);
+
+        transaction.onerror = () => {
+          Swal.fire(
+            'Error!',
+            'Something Went Wrong',
+            'error'
+          )
+        }
+        transaction.oncomplete = () => {
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+          id.target.parentElement.parentElement.remove(); 
+        }
+      }
+    })
+    
   }
 }
 

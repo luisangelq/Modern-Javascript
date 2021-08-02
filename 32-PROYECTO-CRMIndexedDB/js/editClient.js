@@ -1,4 +1,4 @@
-import { connectDB, getClientToEdit, validateClient, updateClient } from "./functions.js";
+import { connectDB, getClientToEdit, validateClient } from "./functions.js";
 
 const form = document.querySelector("form")
 
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (idClient) {
         setTimeout(() => {
             getClientToEdit(idClient)
-        }, 1);
+        }, 100);
     }
 
     form.addEventListener("submit", (e) => validateClient(e, idClient));
