@@ -1,5 +1,7 @@
+
 class UI {
   printAlert = (message, type) => {
+    
     const deleteAlert = document.querySelector(".alertM");
     if (!deleteAlert) {
       const alert = document.createElement("div");

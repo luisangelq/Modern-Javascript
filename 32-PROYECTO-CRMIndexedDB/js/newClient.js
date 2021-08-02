@@ -1,7 +1,5 @@
 import { connectDB, validateClient } from "./functions.js";
 
-
-
 document.addEventListener("DOMContentLoaded", function () {
   //Connect to IndexedDB
   connectDB();

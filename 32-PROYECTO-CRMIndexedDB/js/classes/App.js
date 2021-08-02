@@ -1,4 +1,4 @@
-import { createDB, getClients } from "../functions.js";
+import { createDB, getClients, clientList, deleteClient } from "../functions.js";
 
 class App {
   constructor() {
@@ -11,6 +11,7 @@ class App {
     if (window.indexedDB.open("UmbralCRM", 1)) {
       getClients();
     }
+    
   }
 }
 

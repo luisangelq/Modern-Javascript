@@ -1,9 +1,21 @@
 import UI from "./classes/UI.js";
 
 const ui = new UI();
+
+const nameInput = document.querySelector("#name");
+const emailInput = document.querySelector("#email");
+const phoneInput = document.querySelector("#phone");
+const companyInput = document.querySelector("#company");
+
 const form = document.querySelector("#form");
 
+const clientList = document.querySelector("#clientList");
+clientList.addEventListener("click", (e) => deleteClient(e)); 
+
+ 
 let DB;
+let edit;
+
 const createDB = () => {
   const db = window.indexedDB.open("UmbralCRM", 1);
   db.onupgradeneeded = (e) => {
@@ -42,29 +54,39 @@ const connectDB = () => {
   };
 };
 
-const validateClient = (e) => {
+const validateClient = (e, id) => {
   e.preventDefault();
 
-  const name = form.querySelector("#name").value;
-  const email = form.querySelector("#email").value;
-  const phone = form.querySelector("#phone").value;
-  const company = form.querySelector("#company").value;
+  const name = nameInput.value;
+  const email = emailInput.value;
+  const phone = phoneInput.value;
+  const company = companyInput.value;
 
   if (name === "" || email === "" || phone === "" || company === "") {
-    console.log("valid");
     ui.printAlert("Please fill all the fields", "error");
     return;
   }
 
-  //Create an object with the data
-  const client = {
-    id: Date.now(),
-    name,
-    email,
-    phone,
-    company,
-  };
-  addClient(client);
+  if (edit) {
+    const updatedClient = {
+      id: Number(id),
+      name: nameInput.value,
+      email: emailInput.value,
+      phone: phoneInput.value,
+      company: companyInput.value,
+    };
+    updateClient(updatedClient);
+  } else {
+    //Create an object with the data
+    const client = {
+      id: Date.now(),
+      name,
+      email,
+      phone,
+      company,
+    };
+    addClient(client);
+  }
 };
 
 const addClient = (client) => {
@@ -78,7 +100,7 @@ const addClient = (client) => {
 
     setTimeout(() => {
       window.location.href = "index.html";
-    }, 2000);
+    }, 1500);
   };
   transaction.onerror = (e) => {
     if (e.target.error.message.includes("uniqueness")) {
@@ -89,6 +111,7 @@ const addClient = (client) => {
   };
 };
 
+//Get clients from DB
 const getClients = () => {
   const openConnection = window.indexedDB.open("UmbralCRM", 1);
   openConnection.onerror = () => {
@@ -101,7 +124,7 @@ const getClients = () => {
       const cursor = e.target.result;
       if (cursor) {
         const { id, name, email, phone, company } = cursor.value;
-        const clientList = document.querySelector("#clientList");
+        
         clientList.innerHTML += ` <tr>
         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
             <p class="text-sm leading-5 font-medium text-gray-700 text-lg  font-bold"> ${name} </p>
@@ -115,7 +138,7 @@ const getClients = () => {
         </td>
         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5">
             <a href="edit-client.html?id=${id}" class="text-teal-600 hover:text-teal-900 mr-5">Edit</a>
-            <a href="#" data-client="${id}" class="text-red-600 hover:text-red-900">Delete</a>
+            <a href="#" data-client="${id}" class="text-red-600 hover:text-red-900 deleteClient">Delete</a>
         </td>
     </tr>
 `;
@@ -128,4 +151,68 @@ const getClients = () => {
   };
 };
 
-export { createDB, connectDB, validateClient, getClients };
+//Get client to edit
+const getClientToEdit = (id) => {
+  edit = true;
+  const transaction = DB.transaction(["crm"], "readwrite");
+  const store = transaction.objectStore("crm");
+
+  store.openCursor().onsuccess = (e) => {
+    const cursor = e.target.result;
+    if (cursor) {
+      if (cursor.value.id === Number(id)) {
+        const { name, email, phone, company } = cursor.value;
+        nameInput.value = name;
+        emailInput.value = email;
+        phoneInput.value = phone;
+        companyInput.value = company;
+      }
+      cursor.continue();
+    }
+  };
+};
+
+const updateClient = (client) => {
+  const transaction = DB.transaction(["crm"], "readwrite");
+  const store = transaction.objectStore("crm");
+  store.put(client);
+  
+  transaction.oncomplete = () => {
+    ui.printAlert("Client Updated");
+
+    edit = false;
+    form.reset();
+
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 1500);
+  }
+  transaction.onerror = (e) => {
+    if (e.target.error.message.includes("uniqueness")) {
+      ui.printAlert("This Email Already Exists", "error");
+    } else {
+      ui.printAlert("Error Updating Client", "error");
+    }
+  }
+};
+
+const deleteClient = (id) => {
+  if (id.target.classList.contains("deleteClient")) {
+    const idDelete = Number(id.target.dataset.client);
+    const transaction = DB.transaction(["crm"], "readwrite");
+    const store = transaction.objectStore("crm");
+    store.delete(idDelete);
+
+  }
+}
+
+export {
+  createDB,
+  connectDB,
+  validateClient,
+  getClients,
+  getClientToEdit,
+  updateClient,
+  clientList,
+  deleteClient
+};
