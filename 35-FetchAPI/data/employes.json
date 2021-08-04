@@ -1,0 +1,20 @@
+[
+     {
+          "id" : 1,
+          "name" : "Luis Angel",
+          "company" : "Umbral Apps",
+          "job" : "FullStack Developer"
+     },
+     {
+          "id" : 2,
+          "name" : "Daniel",
+          "company" : "Brain Apps",
+          "job" : "App Developer"
+     },
+     {
+          "id" : 3,
+          "name" : "Miguel Calvillo",
+          "company" : "Limade",
+          "job" : "App Developer"
+     }
+]
