@@ -1,9 +1,11 @@
 const result = document.querySelector("#result");
 const form = document.querySelector("#form");
+const pagesDiv = document.querySelector("#pages");
 
 const recordsPerPage = 30;
 let totalPages;
 let pages;
+let currentPage = 1;
 
 window.onload = () => {
   form.addEventListener("submit", validateForm);
@@ -19,7 +21,7 @@ function validateForm(e) {
     return;
   }
 
-  searchImages(topic);
+  searchImages();
 }
 
 function showAlert(message) {
@@ -50,15 +52,17 @@ function showAlert(message) {
   }
 }
 
-function searchImages(topic) {
+function searchImages() {
+  const topic = document.querySelector("#topic").value;
+
   const key = "22805124-d050eb8070bbfa21bdc6846ec";
-  const url = `https://pixabay.com/api/?key=${key}&q=${topic}&per_page=${recordsPerPage}`;
+  const url = `https://pixabay.com/api/?key=${key}&q=${topic}&per_page=${recordsPerPage}&page=${currentPage}`;
 
   fetch(url)
     .then((response) => response.json())
     .then((json) => {
       totalPages = calculatePages(json);
-      showImages(json.hits)
+      showImages(json.hits);
     })
     .catch((error) => console.log(error));
 }
@@ -68,9 +72,9 @@ function calculatePages(images) {
 }
 
 //Generator for each page
-function *generatePages(totalPages) {
+function* generatePages(totalPages) {
   for (let i = 1; i <= totalPages; i++) {
-    yield i
+    yield i;
   }
 }
 
@@ -104,12 +108,40 @@ function showImages(images) {
       `;
   });
 
-  
+  while (pagesDiv.firstChild) {
+    pagesDiv.removeChild(pagesDiv.firstChild);
+  }
   printPages();
 }
 
 function printPages() {
   pages = generatePages(totalPages);
-  console.log(pages.next().value);
-  console.log(totalPages);
+
+  while (true) {
+    const { value, done } = pages.next();
+    if (done) return;
+
+    const btnPage = document.createElement("a");
+    btnPage.href = "#";
+    btnPage.dataset.page = value;
+    btnPage.textContent = value;
+    btnPage.classList.add(
+      "siguiente",
+      "bg-yellow-400",
+      "px-4",
+      "py-1",
+      "m-2",
+      "font-bold",
+      "rounded"
+    );
+    btnPage.onclick = (e) => {
+      e.preventDefault();
+      currentPage = value;
+
+      searchImages();
+      document.documentElement.scrollTop = 0;
+    };
+
+    pagesDiv.appendChild(btnPage);
+  }
 }
