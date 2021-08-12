@@ -1,3 +1,18 @@
 {
-  "clients": []
+  "clients": [
+    {
+      "id": 1,
+      "name": "Luis Angel Quiñones Guerrero",
+      "email": "luisangelq3673@gmail.com",
+      "phone": "(331) 876-7978",
+      "company": "Umbral Apps"
+    },
+    {
+      "name": "Federico Montes",
+      "email": "federicof39@gmail.com",
+      "phone": "3326568978",
+      "company": "Seytu",
+      "id": 2
+    }
+  ]
 }

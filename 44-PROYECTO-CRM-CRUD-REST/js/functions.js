@@ -1,4 +1,4 @@
-import { newClient, getClients, deleteClient } from "./API.js";
+import { newClient, getClients, getClientById, updateClient, deleteClient } from "./API.js";
 
 const name = document.querySelector("#name");
 const email = document.querySelector("#email");
@@ -8,8 +8,11 @@ const form = document.querySelector("#form");
 
 const clientList = document.querySelector("#clientList");
 
-const validateClient = (e) => {
+let edit = false;
+
+const validateClient = (e, id) => {
   e.preventDefault();
+
   const client = {
     name: name.value,
     email: email.value,
@@ -22,11 +25,23 @@ const validateClient = (e) => {
     client.phone === "" ||
     client.company === ""
   ) {
-    printAlert("All Fields Are Required", "error");
+    printAlert("All Fields Are Required", "warning");
     return;
   }
 
-  newClient(client);
+  if (edit) {
+    const clientUpdate = {
+      id: Number(id),
+      name: name.value,
+      email: email.value,
+      phone: phone.value,
+      company: company.value
+    };
+    updateClient(clientUpdate);
+    edit = false;
+  } else {
+    newClient(client);
+  }
 };
 
 const showClients = async () => {
@@ -54,6 +69,18 @@ const showClients = async () => {
     </tr> `;
     clientList.appendChild(row);
   });
+};
+
+//get clients to edit
+const getClientToEdit = async (id) => {
+  edit = true;
+  const client = await getClientById(id);
+  console.log(client);
+  const { name, email, phone, company } = client;
+  document.querySelector("#name").value = name;
+  document.querySelector("#email").value = email;
+  document.querySelector("#phone").value = phone;
+  document.querySelector("#company").value = company;
 };
 
 const confirmDeleteClient = (e) => {
@@ -94,4 +121,11 @@ const printAlert = (msg, type) => {
   });
 };
 
-export { form, clientList, validateClient, showClients, confirmDeleteClient };
+export {
+  form,
+  clientList,
+  validateClient,
+  showClients,
+  getClientToEdit,
+  confirmDeleteClient,
+};
