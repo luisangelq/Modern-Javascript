@@ -23,26 +23,45 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 const consultCrypto = () => {
+
+  //Execution time
+  const start = performance.now(); 
+
   const url =
     "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=10&tsym=USD";
 
   fetch(url)
     .then((response) => response.json())
     .then((data) => new Promise((resolve) => resolve(data.Data)))
-    .then((cryptoData) => getCrypto(cryptoData))
+    .then((cryptoData) => getCrypto(cryptoData, start))
     .catch((error) => console.log(error));
 };
 
-const getCrypto = (cryptoData) => {
+const getCrypto = (cryptoData, executeTime) => {
+  const start = performance.now(); 
   console.log(cryptoData);
-  cryptoData.forEach((crypto) => {
-    const { FullName, Name } = crypto.CoinInfo;
+  // cryptoData.forEach((crypto) => {
+  //   const { FullName, Name } = crypto.CoinInfo;
+
+  //   const option = document.createElement("option");
+  //   option.value = Name;
+  //   option.textContent = FullName;
+  //   cryptoSelect.appendChild(option);
+  // });
+
+  for (let i = 0; i < cryptoData.length; i++) {
+    const { FullName, Name } = cryptoData[i].CoinInfo;
 
     const option = document.createElement("option");
     option.value = Name;
     option.textContent = FullName;
     cryptoSelect.appendChild(option);
-  });
+    
+  }
+
+  const end = performance.now();
+
+  console.log(end - start);
 };
 
 const validateFields = (e) => {

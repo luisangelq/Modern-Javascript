@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshots is John Doe 1`] = `
+Object {
+  "age": 30,
+  "balance": 500,
+  "name": "John Doe",
+  "type": "gold",
+}
+`;

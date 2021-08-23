@@ -1,0 +1,14 @@
+{
+  "name": "51-testing-jest",
+  "version": "1.0.0",
+  "description": "Learning Jest",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Luis Angel",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}
