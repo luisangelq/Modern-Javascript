@@ -1,0 +1,14 @@
+{
+  "name": "52-testing-cypress",
+  "version": "1.0.0",
+  "description": "Trying Cypress",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Luis Quiñones",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^8.3.0"
+  }
+}
