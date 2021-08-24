@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test appointment Class Add new appointment 1`] = `
+Citas {
+  "citas": Array [
+    Object {
+      "fecha": "2018-01-01",
+      "hora": "10:00",
+      "id": 1629766490402,
+      "mascota": "Hook",
+      "propietario": "Luis",
+      "sintomas": "No duerme",
+      "telefono": "3326264356",
+    },
+  ],
+}
+`;
+
+exports[`test appointment Class Delete appointment 1`] = `
+Citas {
+  "citas": Array [],
+}
+`;
+
+exports[`test appointment Class Update appointment 1`] = `
+Citas {
+  "citas": Array [
+    Object {
+      "fecha": "2018-01-01",
+      "hora": "10:00",
+      "id": 1629766490402,
+      "mascota": "New Pet",
+      "propietario": "Luis",
+      "sintomas": "No duerme",
+      "telefono": "3326264356",
+    },
+  ],
+}
+`;
