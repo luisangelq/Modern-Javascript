@@ -1,0 +1,21 @@
+{
+  "name": "53-webpack-eslint-babel",
+  "version": "1.0.0",
+  "description": "Learning Webpack, ESLint and Babel",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "webpack",
+    "dev": "webpack serve"
+  },
+  "author": "Luis Quiñones",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^3.1.10"
+  }
+}
