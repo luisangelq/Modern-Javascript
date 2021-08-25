@@ -1,24 +1,24 @@
-import logo from './logo.svg';
+import { Fragment, useState } from 'react';
 import './App.css';
+import Header from "./components/Header";
+import Form from './components/Form';
 
 function App() {
+  //DEfine the initial state of the application
+  const [quantity, setQuantity] = useState(0);
+  const [deadLine, setDeadLine] = useState("");
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <Header />
+      <Form
+        quantity={quantity}
+        setQuantity={setQuantity}
+        deadLine={deadLine}
+        setDeadLine={setDeadLine}
+      />
+    </Fragment>
   );
 }
 
