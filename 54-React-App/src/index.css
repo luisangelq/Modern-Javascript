@@ -32,9 +32,18 @@ form, .mensajes {
 }
 .mensajes {
   text-align: center;
+  color: white;
+  font-size: larger;
+  font-weight: bold;
 }
 .resultado {
-  border: 2px solid #00b0d7;
+  text-align: center;
+  color: white;
+  font-size: x-large;
+  font-weight: bold;
+  width: 80%;
+  margin: 0 auto;
+  border: 2px solid white;
   padding: 3rem 0;
 }
 form label {

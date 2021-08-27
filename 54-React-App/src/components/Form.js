@@ -1,25 +1,32 @@
 // import { useState } from "react";
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import Swal from "sweetalert2";
 
+import { calculateTotals } from "../helpers"
 
+const Form = (props) => {
+  const { quantity, setQuantity, deadLine, setDeadLine, setTotalLoan } = props;
 
-const Form = ({quantity, setQuantity, deadLine, setDeadLine}) => {
-  
-    // const [error, setError] = useState(false);
-
-    const calculateLoan = (e) => {
-        e.preventDefault();
-        const MySwal = withReactContent(Swal)
-        //validate
-        if (quantity === 0 || deadLine === "") {
-            MySwal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Something went wrong!',
-              })
-        }
+  const calculateLoan = (e) => {
+    e.preventDefault();
+    //validate
+    if (quantity === 0 || deadLine === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "All Fields Must Be Filled",
+      });
+      return;
     }
+
+    const total = calculateTotals(quantity, deadLine);
+    setTotalLoan(total);
+
+    Swal.fire({
+      icon: "success",
+      title: "Loan Calculated",
+      text: "Total Loan Amount: " + total,
+    });
+  };
 
   return (
     <form onSubmit={calculateLoan}>
@@ -35,7 +42,10 @@ const Form = ({quantity, setQuantity, deadLine, setDeadLine}) => {
         </div>
         <div>
           <label>Deadline to Pay</label>
-          <select className="u-full-width" onChange={e => setDeadLine(parseInt(e.target.value))}>
+          <select
+            className="u-full-width"
+            onChange={(e) => setDeadLine(parseInt(e.target.value))}
+          >
             <option value="">-Select-</option>
             <option value="3">3 Months</option>
             <option value="6">6 Months</option>
