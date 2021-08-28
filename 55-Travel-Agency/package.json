@@ -1,0 +1,21 @@
+{
+  "name": "55-travel-agency",
+  "version": "1.0.0",
+  "description": "Project using Node.js, Express, Sequalize, Pug, Bootstrap",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "type": "module",
+  "author": "Luis Quiñones",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^2.3.0",
+    "pug": "^3.0.2",
+    "sequelize": "^6.6.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
