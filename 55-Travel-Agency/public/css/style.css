@@ -32,7 +32,7 @@ h3 {
     border-color: rgb(192, 7, 78);
 }
 .slider {
-    background: url(../img//superior.jpg);
+    background: url(../img/superior.jpg);
     min-height: 600px;
     height: 100vh;
     background-size: cover;

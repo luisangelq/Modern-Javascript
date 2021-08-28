@@ -2,5 +2,33 @@ extends ./layout/index
 
 block content
     main.container.mt-5 
-        .row 
-            h1= pageName
+        h1.text-center= pageName
+
+        include ./layout/testimonialsBlock
+
+
+        .row
+            h2.d-block.w-100.text-center Add Testimonial
+
+            if(error)
+                .alert.alert-danger.w-100.text-center= error
+            .row.justify-content-center.col
+                .col-md-8 
+                    form(action="/testimonials" method="POST")
+                        .form-group
+                            label(for="name") Name
+                            input#name(type="text", placeholder="Your Name", name="name", class="form-control", value= name)
+
+                        .form-group
+                            label(for="email") Email
+                            input#name(type="email", placeholder="Your Email", name="email", class="form-control", value= email)
+
+                        .form-group
+                            label(for="message") Message
+                            textarea#message(class="form-control", name="message", rows="3")= message
+                        
+                        input.btn.btn-success.btn-block(type="submit", value="Submit")
+
+
+            
+                

@@ -2,6 +2,8 @@
 import express from 'express';
 import router from './routes/index.js';
 import db from './config/db.js';
+import dotenv from 'dotenv';
+dotenv.config({path:"variables.env"});
 
 const app = express();
 
@@ -10,10 +12,8 @@ db.authenticate()
   .then(() => console.log("DB conected") )
   .catch(err => console.log(err));
 
-const port = process.env.PORT || 4000;
-
-//Add router
-app.use('/', router); 
+//Add Body Parser
+app.use(express.urlencoded({ extended: true }));
 
 //enable pug
 app.set('view engine', 'pug');
@@ -23,7 +23,13 @@ app.use(express.static('public'));
 
 app.locals.currentYear = new Date().getFullYear();
 
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-})
+//Add router
+app.use('/', router); 
+
+//Start server
+const host = process.env.HOST || "0.0.0.0";
+const port = process.env.PORT || 3000;
+app.listen(port, host, () => {
+  console.log(`Server is working on host: ${host} and port: ${port}`);
+});
 

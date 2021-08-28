@@ -1,11 +1,23 @@
 import { Journey } from "../models/Journey.js";
+import { Testimonials } from "../models/Testimonials.js";
 
-const homePage = (req, res) => {
-  //req = petition we're making, res = response
-  res.render("home", {
-    titleName: "Travel Agency",
-    pageName: "Home",
-  });
+const homePage = async (req, res) => {
+  //consult the database to get the 3 journeys
+  try {
+    const response = await Promise.all([
+      Journey.findAll({ limit: 3 }),
+      Testimonials.findAll({ limit: 3 }),
+    ]);
+    res.render("home", {
+      titleName: "Travel Agency",
+      pageName: "Home",
+      home: "home",
+      journeys: response[0],
+      testimonials: response[1],
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const aboutPage = (req, res) => {
@@ -26,11 +38,19 @@ const journeysPage = async (req, res) => {
   });
 };
 
-const testimonialsPage = (req, res) => {
-  res.render("testimonials", {
-    titleName: "Travel Agency",
-    pageName: "Testimonials",
-  });
+const testimonialsPage = async (req, res) => {
+  try {
+    //Consult the database to get the testimonials
+    const testimonials = await Testimonials.findAll();
+
+    res.render("testimonials", {
+      titleName: "Travel Agency",
+      pageName: "Testimonials",
+      testimonials,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 //Show journey by slug
@@ -41,7 +61,7 @@ const detailJourneyPage = async (req, res) => {
     res.render("detailJourney", {
       titleName: "Travel Agency",
       pageName: journey.title,
-      journey
+      journey,
     });
   } catch (error) {
     console.log(error);

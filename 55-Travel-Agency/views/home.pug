@@ -1,6 +1,32 @@
 extends ./layout/index
 
+block slider
+  .slider
+    em adventure 
+
 block content
     main.container.mt-5
-        .row 
-            h1= pageName
+        h2.text-center.mb-5 About Us
+        .row.mb-5
+            .col-md-6
+                p ipsum dolor sit amet consectetur adipisicing elit. Similique reiciendis est quasi expedita, error cumque ipsum eum facilis ipsa fuga aut ut, laboriosam tenetur illo voluptates natus quas odio modi!
+                p Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste voluptatem quaerat ex saepe accusamus et ipsam rerum necessitatibus exercitationem est doloremque atque tenetur ducimus odio aliquid ea accusantium, asperiores facere!
+            .col-md-6.align-self-center
+                img.img-fluid(src="/img/inicio_nosotros.jpg", alt="about img")
+            
+        include ./layout/journeysBlock
+
+    .descuento
+        .container
+            .row 
+                .col-md-6
+                    .contenido 
+                        h3 5% OFF
+                        p.titulo Travel to Canada 
+                        p.fecha March 20, 2022 - March 22, 2022
+                        p.precio $399.00
+
+    .container.mt-5
+        h2.text-center.mb-5 Testimonials 
+
+        include ./layout/testimonialsBlock
