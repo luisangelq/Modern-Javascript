@@ -19,8 +19,6 @@ const journeysPage = async (req, res) => {
   //Consult the database to get the journeys
   const journeys = await Journey.findAll();
 
-  console.log(journeys);
-
   res.render("journeys", {
     titleName: "Travel Agency",
     pageName: "Next Journeys",
@@ -35,4 +33,25 @@ const testimonialsPage = (req, res) => {
   });
 };
 
-export { homePage, aboutPage, journeysPage, testimonialsPage };
+//Show journey by slug
+const detailJourneyPage = async (req, res) => {
+  const { slug } = req.params;
+  try {
+    const journey = await Journey.findOne({ where: { slug } });
+    res.render("detailJourney", {
+      titleName: "Travel Agency",
+      pageName: journey.title,
+      journey
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  homePage,
+  aboutPage,
+  journeysPage,
+  testimonialsPage,
+  detailJourneyPage,
+};
