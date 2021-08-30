@@ -1,0 +1,21 @@
+{
+  "name": "patients-administrator",
+  "version": "1.0.0",
+  "description": "Backend in MongoDB and Express",
+  "author": "Luis Quiñones",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
