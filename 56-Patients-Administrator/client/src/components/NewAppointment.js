@@ -1,25 +1,41 @@
 import { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import clientAxios from "../config/axios";
 
-const NewAppointment = () => {
+const NewAppointment = (props) => {
 
+  console.log(props);
   const [appointment, setAppointment] = useState({
     name: "",
     owner: "",
     date: "",
     time: "",
     phone: "",
-    symptoms: ""
-
+    symptoms: "",
   });
 
   //Read the form values
-  const updateState = e => {
+  const updateState = (e) => {
     setAppointment({
       ...appointment,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
-  }
+  };
+
+  const createNewAppointment = (e) => {
+    e.preventDefault();
+
+    clientAxios
+      .post("/patients", appointment)
+      .then((res) => {
+        console.log(res);
+        props.setConsult(true);
+        props.history.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <Fragment>
@@ -38,7 +54,10 @@ const NewAppointment = () => {
         </div>
 
         <div className="col-md-8 mx-auto">
-          <form className="bg-white p-5 bordered">
+          <form
+            onSubmit={createNewAppointment}
+            className="bg-white p-5 bordered"
+          >
             <div className="form-group">
               <label htmlFor="nombre">Nombre Mascota</label>
               <input
@@ -46,7 +65,7 @@ const NewAppointment = () => {
                 className="form-control form-control-lg"
                 id="name"
                 name="name"
-                placeholder="Pet Name"  
+                placeholder="Pet Name"
                 onChange={updateState}
               />
             </div>
@@ -87,7 +106,7 @@ const NewAppointment = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="hora">Hora Alta</label>
+              <label htmlFor="time">Discharge Time</label>
               <input
                 type="time"
                 className="form-control form-control-lg"
@@ -98,7 +117,7 @@ const NewAppointment = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="sintomas">Síntomas</label>
+              <label htmlFor="symptoms">Symptoms</label>
               <textarea
                 className="form-control"
                 name="symptoms"
@@ -119,4 +138,4 @@ const NewAppointment = () => {
   );
 };
 
-export default NewAppointment;
+export default withRouter(NewAppointment) ;

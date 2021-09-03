@@ -26,11 +26,11 @@ app.use(cors());
 mongoose.Promise = global.Promise;
 mongoose.connect(urlMongo, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
 });
 
 //Add Body Parser
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 //Middlewares
 app.use("/", router);
