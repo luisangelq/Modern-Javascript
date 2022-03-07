@@ -1,0 +1,82 @@
+{
+    "dishes": [
+      {
+        "id": 1,
+        "name": "Small Wood Fired Pizza",
+        "price": 30,
+        "category": 1
+      },
+      {
+        "id": 2,
+        "name": "Medium Wood Fired Pizza",
+        "price": 50,
+        "category": 1
+      },
+      {
+        "id": 3,
+        "name": "Lemon Pay Slice",
+        "price": 30,
+        "category": 3
+      },
+      {
+        "id": 4,
+        "name": "Slice of Chocolate Cake",
+        "price": 30,
+        "category": 3
+      },
+      {
+        "id": 5,
+        "name": "Orange juice",
+        "price": 15,
+        "category": 2
+      },
+      {
+        "id": 6,
+        "name": "Large Wood Fired Pizza",
+        "price": 70,
+        "category": 1
+      },
+      {
+        "id": 7,
+        "name": "Rib Eye 800g",
+        "price": 100,
+        "category": 1
+      },
+      {
+        "id": 8,
+        "name": "Soda",
+        "price": 15,
+        "category": 2
+      },
+      {
+        "id": 9,
+        "name": "Tequila",
+        "price": 40,
+        "category": 2
+      },
+      {
+        "id": 10,
+        "name": "Cheesecake Slice",
+        "price": 30,
+        "category": 3
+      },
+      {
+        "id": 11,
+        "name": "American coffee",
+        "price": 20,
+        "category": 2
+      },
+      {
+        "id": 12,
+        "name": "Cappuccino coffee",
+        "price": 40,
+        "category": 2
+      }
+    ],
+
+    "category": {
+      "1": "Food",
+      "2": "Drinks",
+      "3": "Desserts"
+    }
+  }
