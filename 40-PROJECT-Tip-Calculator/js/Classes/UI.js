@@ -80,37 +80,45 @@ class UI {
 
   showResume(clientObj) {
     const content = document.querySelector("#resume .content");
-
     const resume = document.createElement("div");
-    resume.classList.add("col-md-6", "card", "py-5", "px-3", "shadow");
+    
 
-    const heading = document.createElement("h3");
-    heading.textContent = "Consumed Dishes"
-    heading.classList.add("my-4", "text-center");
+    if (clientObj.order.length === 0) {
+      const heading = document.createElement("p");
+      heading.classList.add("text-center");
+      heading.textContent = "Add order elements";
 
-    const table = document.createElement("p");
-    table.textContent = "Table: ";
-    table.classList.add("fw-bold");
-    const tableSpan = document.createElement("span");
-    tableSpan.textContent = clientObj.table;
-    tableSpan.classList.add("fw-normal");
+      resume.appendChild(heading);
+    } else {
+      resume.classList.add("col-md-6", "card", "py-2", "px-3", "shadow");
 
-    const hour = document.createElement("p");
-    hour.textContent = "Hour: ";
-    hour.classList.add("fw-bold");
-    const hourSpan = document.createElement("span");
-    hourSpan.textContent = clientObj.hour;
-    hourSpan.classList.add("fw-normal");
+      const heading = document.createElement("h3");
+      heading.textContent = "Consumed Dishes";
+      heading.classList.add("my-4", "text-center");
 
-    const itemGroup = document.createElement("ul");
-    itemGroup.classList.add("list-group");
+      const table = document.createElement("p");
+      table.textContent = "Table: ";
+      table.classList.add("fw-bold");
+      const tableSpan = document.createElement("span");
+      tableSpan.textContent = clientObj.table;
+      tableSpan.classList.add("fw-normal");
 
-    clientObj.order.map((element) => { 
+      const hour = document.createElement("p");
+      hour.textContent = "Hour: ";
+      hour.classList.add("fw-bold");
+      const hourSpan = document.createElement("span");
+      hourSpan.textContent = clientObj.hour;
+      hourSpan.classList.add("fw-normal");
+
+      const itemGroup = document.createElement("ul");
+      itemGroup.classList.add("list-group");
+
+      clientObj.order.map((element) => {
         const { name, price, total, id } = element;
 
         const item = document.createElement("li");
         item.classList.add("list-group-item");
-        
+
         const itemName = document.createElement("h4");
         itemName.classList.add("my-4");
         itemName.textContent = name;
@@ -123,23 +131,58 @@ class UI {
         itemPrice.classList.add("fw-bold");
         itemPrice.textContent = `Price: $${price}`;
 
+        const subtotal = document.createElement("p");
+        subtotal.classList.add("fw-bold");
+        subtotal.textContent = `Subtotal: $${price * total}`;
+
+        const remove = document.createElement("button");
+        remove.classList.add("btn", "btn-danger");
+        remove.textContent = "Remove";
+        remove.onclick = () => {
+          const input = document.querySelector(`#product-${id}`);
+          input.value = 0;
+          input.onchange();
+        };
+
         item.appendChild(itemName);
         item.appendChild(itemTotal);
         item.appendChild(itemPrice);
+        item.appendChild(subtotal);
+        item.appendChild(remove);
 
         itemGroup.appendChild(item);
-    });
+      });
 
-    table.appendChild(tableSpan);
-    hour.appendChild(hourSpan);
+      table.appendChild(tableSpan);
+      hour.appendChild(hourSpan);
 
-    
-    resume.appendChild(table);
-    resume.appendChild(hour);
-    resume.appendChild(heading);
-    resume.appendChild(itemGroup);
+      resume.appendChild(heading);
+      resume.appendChild(table);
+      resume.appendChild(hour);
+      resume.appendChild(itemGroup);
+    }
 
     content.appendChild(resume);
+  }
+
+  showTips() {
+    const content = document.querySelector("#resume .content");
+
+    const form = document.createElement("div");
+    form.classList.add("col-md-6");
+
+    const formContainer = document.createElement("div");
+    formContainer.classList.add("card", "py-2", "px-3", "shadow");
+
+    const heading = document.createElement("h3");
+    heading.classList.add("my-4", "text-center");
+    heading.textContent = "Tips";
+
+    formContainer.appendChild(heading);
+    form.appendChild(formContainer);
+    
+
+    content.appendChild(form);
   }
 }
 

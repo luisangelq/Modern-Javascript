@@ -38,9 +38,6 @@ const createClient = async () => {
   const table = tableInput.value;
   const hour = hourInput.value;
 
-  const timeNow = new Date();
-  const timeHourAndMinutes = timeNow.getHours() + ":" + timeNow.getMinutes();
-
   console.log(clientObj);
   if (tableInput.value === "" || hourInput.value === "") {
     ui.showAlert("All Fields Are Required", "errorAlert");
@@ -86,6 +83,9 @@ const addMenuElement = (items) => {
   cleanPreviewHtml();
 
   ui.showResume(clientObj);
+
+  ui.showTips(clientObj.order);
 };
+
 
 export { clientData, hideModal, createClient, addMenuElement };
