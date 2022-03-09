@@ -1,4 +1,4 @@
-import { addMenuElement } from "../functions.js";
+import { addMenuElement, calculateTips } from "../functions.js";
 
 class UI {
   showAlert(message, type) {
@@ -169,7 +169,7 @@ class UI {
     const content = document.querySelector("#resume .content");
 
     const form = document.createElement("div");
-    form.classList.add("col-md-6");
+    form.classList.add("col-md-6", "tipForm");
 
     const formContainer = document.createElement("div");
     formContainer.classList.add("card", "py-2", "px-3", "shadow");
@@ -178,11 +178,114 @@ class UI {
     heading.classList.add("my-4", "text-center");
     heading.textContent = "Tips";
 
-    formContainer.appendChild(heading);
-    form.appendChild(formContainer);
-    
+    const radio10 = document.createElement("input");
+    radio10.type = "radio";
+    radio10.name = "tips";
+    radio10.value = "10";
+    radio10.classList.add("form-check-input");
+    radio10.onclick = () => calculateTips(10);
 
+    const radio10Label = document.createElement("label");
+    radio10Label.classList.add("form-check-label");
+    radio10Label.textContent = "10%";
+
+    const radio10Div = document.createElement("div");
+    radio10Div.classList.add("form-check");
+
+    radio10Div.appendChild(radio10);
+    radio10Div.appendChild(radio10Label);
+
+    const radio15 = document.createElement("input");
+    radio15.type = "radio";
+    radio15.name = "tips";
+    radio15.value = "15";
+    radio15.classList.add("form-check-input");
+    radio15.onclick = () => calculateTips(15);
+
+    const radio15Label = document.createElement("label");
+    radio15Label.classList.add("form-check-label");
+    radio15Label.textContent = "15%";
+
+    const radio15Div = document.createElement("div");
+    radio15Div.classList.add("form-check");
+
+    radio15Div.appendChild(radio15);
+    radio15Div.appendChild(radio15Label);
+
+
+    const radio20 = document.createElement("input");
+    radio20.type = "radio";
+    radio20.name = "tips";
+    radio20.value = "20";
+    radio20.classList.add("form-check-input");
+    radio20.onclick = () => calculateTips(20);
+
+    const radio20Label = document.createElement("label");
+    radio20Label.classList.add("form-check-label");
+    radio20Label.textContent = "20%";
+
+    const radio20Div = document.createElement("div");
+    radio20Div.classList.add("form-check");
+
+    radio20Div.appendChild(radio20);
+    radio20Div.appendChild(radio20Label);
+
+    formContainer.appendChild(heading);
+    formContainer.appendChild(radio10Div);
+    formContainer.appendChild(radio15Div);
+    formContainer.appendChild(radio20Div);
+
+    form.appendChild(formContainer);
     content.appendChild(form);
+
+  }
+
+  showTotal(data) {
+    const {subtotal, totalTip, totalWithTip} = data;
+    const totalCard = document.querySelector(".totalCard")
+    if(totalCard) {
+      totalCard.remove();
+    }
+
+    const tipForm = document.querySelector(".tipForm");
+
+    const subtotalP = document.createElement("p");
+    subtotalP.classList.add("fw-bold");
+    subtotalP.textContent = `Subtotal: `;
+
+    const subtotalSpan = document.createElement("span");
+    subtotalSpan.classList.add("fw-normal");
+    subtotalSpan.textContent = `$${subtotal}`;
+    subtotalP.appendChild(subtotalSpan);
+
+    const tipP = document.createElement("p");
+    tipP.classList.add("fw-bold");
+    tipP.textContent = `Tip: `;
+
+    const tipSpan = document.createElement("span");
+    tipSpan.classList.add("fw-normal");
+    tipSpan.textContent = `$${totalTip}`;
+    tipP.appendChild(tipSpan);
+
+    const totalP = document.createElement("p");
+    totalP.classList.add("fs-3", "fw-bold");
+    totalP.textContent = `Total: `;
+
+    const totalSpan = document.createElement("span");
+    totalSpan.classList.add("fs-3", "fw-normal");
+    totalSpan.textContent = `$${totalWithTip}`;
+    totalP.appendChild(totalSpan);
+
+    const totalDiv = document.createElement("div");
+    totalDiv.classList.add("card", "py-2", "px-3", "shadow", "totalCard");
+
+    totalDiv.appendChild(subtotalP);
+    totalDiv.appendChild(tipP);
+    totalDiv.appendChild(totalP);
+
+    tipForm.appendChild(totalDiv);
+
+    console.log(subtotal, totalTip, totalWithTip);
   }
 }
 

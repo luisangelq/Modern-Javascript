@@ -26,8 +26,8 @@ const showSections = () => {
   });
 };
 
-const cleanPreviewHtml = () => {
-    const content = document.querySelector("#resume .content");
+const cleanPreviewHtml = (tag) => {
+    const content = document.querySelector(tag);
 
     while(content.firstChild) {
         content.removeChild(content.firstChild);
@@ -80,12 +80,27 @@ const addMenuElement = (items) => {
     clientObj.order = [...result];
   }
 
-  cleanPreviewHtml();
+  cleanPreviewHtml("#resume .content");
 
   ui.showResume(clientObj);
 
   ui.showTips(clientObj.order);
+  
 };
 
+const calculateTips = (tip) => {
+  const { order } = clientObj;
 
-export { clientData, hideModal, createClient, addMenuElement };
+  const subtotal = order.reduce((subtotal, item) => {
+    return subtotal + item.price * item.total;
+  }, 0);
+
+  const totalWithTip = subtotal + (subtotal * (tip / 100));
+
+  const totalTip = totalWithTip - subtotal;
+
+  ui.showTotal({ subtotal, totalTip, totalWithTip });
+}
+
+
+export { clientData, hideModal, createClient, addMenuElement, calculateTips };
